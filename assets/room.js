@@ -111,8 +111,9 @@
       panel.classList.add("success");
       if (msg) { msg.textContent = OK_MSG; msg.className = "msg ok"; }
       if (codeEl) codeEl.textContent = roomCode;
+      const continueLabel = panel.dataset.continueLabel || "Continue";
       if (continueWrap && nextHref) {
-        continueWrap.innerHTML = `<a class="btn success" href="${nextHref}">Continue</a>`;
+        continueWrap.innerHTML = `<a class="btn success" href="${nextHref}">${continueLabel}</a>`;
       }
       showCelebrate(true);
     }

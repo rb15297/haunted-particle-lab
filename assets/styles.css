@@ -78,6 +78,20 @@ a { color: var(--primary); }
   max-width: 100%;
   width: 100%;
 }
+.challenge-clip {
+  margin: 0 0 1rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  max-width: 100%;
+}
+.challenge-clip video, .challenge-clip img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 280px;
+  object-fit: cover;
+  background: #111;
+}
 .room-scene img, .celebrate-scene img, .final-scene img {
   display: block;
   width: 100%;
