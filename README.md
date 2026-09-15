@@ -1,3 +1,3 @@
-# Haunted Particle Lab
+Student site for Haunted Particle Lab.
 
-Student site only. No teacher PDFs or answer keys.
+Teacher PDFs and answer keys are not published here.
