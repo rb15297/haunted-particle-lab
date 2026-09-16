@@ -50,21 +50,16 @@
   function applyTry(letter) {
     const layer = document.querySelector("[data-tries]");
     const lineEl = document.querySelector("[data-try-line]");
-    if (!layer) return;
+    if (!layer || !lineEl) return;
     let tries = [];
     try { tries = JSON.parse(layer.getAttribute("data-tries") || "[]"); } catch (e) { return; }
     const idx = "ABCD".indexOf(letter);
-    layer.querySelectorAll(".scene-hotspot").forEach((h, i) => {
-      h.classList.toggle("is-lit", i === idx);
-    });
-    if (lineEl) {
-      if (idx >= 0 && tries[idx] && tries[idx].line) {
-        lineEl.textContent = tries[idx].line;
-        lineEl.removeAttribute("hidden");
-      } else {
-        lineEl.textContent = "";
-        lineEl.setAttribute("hidden", "");
-      }
+    if (idx >= 0 && tries[idx] && tries[idx].line) {
+      lineEl.textContent = tries[idx].line;
+      lineEl.removeAttribute("hidden");
+    } else {
+      lineEl.textContent = "";
+      lineEl.setAttribute("hidden", "");
     }
   }
 
