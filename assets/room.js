@@ -99,13 +99,14 @@
     const btn = panel.querySelector("[data-unlock-btn]");
     const continueWrap = panel.querySelector(".continue-wrap");
     const celebrate = document.querySelector("[data-celebrate]");
+    const sceneBg = document.querySelector(".scene-bg");
 
     function showCelebrate(on) {
-      if (!celebrate) return;
-      const vid = celebrate.querySelector("video");
+      const vid = celebrate && celebrate.querySelector("video");
+      const img = celebrate && celebrate.querySelector("img");
       if (on) {
-        celebrate.removeAttribute("hidden");
-        if (vid) {
+        if (vid && celebrate) {
+          celebrate.removeAttribute("hidden");
           const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
           if (reduce) {
             vid.pause();
@@ -114,12 +115,22 @@
             vid.currentTime = 0;
             vid.play().catch(() => {});
           }
+        } else if (sceneBg && img) {
+          sceneBg.style.backgroundImage = `url("${img.getAttribute("src")}")`;
+          if (celebrate) celebrate.setAttribute("hidden", "");
+        } else if (celebrate) {
+          celebrate.removeAttribute("hidden");
         }
       } else {
-        celebrate.setAttribute("hidden", "");
-        if (vid) {
-          vid.pause();
-          vid.currentTime = 0;
+        if (sceneBg && sceneBg.dataset.lockedSrc) {
+          sceneBg.style.backgroundImage = `url("${sceneBg.dataset.lockedSrc}")`;
+        }
+        if (celebrate) {
+          celebrate.setAttribute("hidden", "");
+          if (vid) {
+            vid.pause();
+            vid.currentTime = 0;
+          }
         }
       }
     }
@@ -178,14 +189,20 @@
       if (win) win.hidden = false;
       burstConfetti();
       const media = root.querySelector("[data-final-media]");
-      if (media) media.removeAttribute("hidden");
-      const vid = root.querySelector("video");
-      if (vid) {
+      const sceneBg = root.querySelector(".scene-bg");
+      const vid = media && media.querySelector("video");
+      const img = media && media.querySelector("img");
+      if (vid && media) {
+        media.removeAttribute("hidden");
         const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         if (!reduce) {
           vid.currentTime = 0;
           vid.play().catch(() => {});
         }
+      } else if (sceneBg && img) {
+        sceneBg.style.backgroundImage = `url("${img.getAttribute("src")}")`;
+      } else if (media) {
+        media.removeAttribute("hidden");
       }
     } else if (gate) {
       gate.hidden = false;
