@@ -47,6 +47,27 @@
     });
   }
 
+  function applyTry(letter) {
+    const layer = document.querySelector("[data-tries]");
+    const lineEl = document.querySelector("[data-try-line]");
+    if (!layer) return;
+    let tries = [];
+    try { tries = JSON.parse(layer.getAttribute("data-tries") || "[]"); } catch (e) { return; }
+    const idx = "ABCD".indexOf(letter);
+    layer.querySelectorAll(".scene-hotspot").forEach((h, i) => {
+      h.classList.toggle("is-lit", i === idx);
+    });
+    if (lineEl) {
+      if (idx >= 0 && tries[idx] && tries[idx].line) {
+        lineEl.textContent = tries[idx].line;
+        lineEl.removeAttribute("hidden");
+      } else {
+        lineEl.textContent = "";
+        lineEl.setAttribute("hidden", "");
+      }
+    }
+  }
+
   function initChoices() {
     const box = document.querySelector("[data-choices]");
     if (!box) return;
@@ -57,12 +78,14 @@
     const saved = sessionStorage.getItem(key);
     if (saved) {
       buttons.forEach((b) => b.classList.toggle("selected", b.dataset.letter === saved));
+      applyTry(saved);
     }
     buttons.forEach((btn) => {
       btn.addEventListener("click", () => {
         buttons.forEach((b) => b.classList.remove("selected"));
         btn.classList.add("selected");
         sessionStorage.setItem(key, btn.dataset.letter);
+        applyTry(btn.dataset.letter);
         paintProgress(document.querySelector("[data-progress]"));
       });
     });
