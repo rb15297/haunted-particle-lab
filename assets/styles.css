@@ -308,7 +308,8 @@ body.scene-overlay .scene-pane .nav { margin-top: 1rem; }
 body.scene-overlay .scene-caption {
   position: absolute;
   left: 4%;
-  width: 62%;
+  width: fit-content;
+  max-width: 62%;
   bottom: 4%;
   margin: 0;
   padding: 0.45rem 0.7rem;
