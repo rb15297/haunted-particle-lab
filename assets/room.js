@@ -98,7 +98,7 @@
     const codeEl = panel.querySelector(".room-code");
     const btn = panel.querySelector("[data-unlock-btn]");
     const continueWrap = panel.querySelector(".continue-wrap");
-    const celebrate = panel.querySelector("[data-celebrate]");
+    const celebrate = document.querySelector("[data-celebrate]");
 
     function showCelebrate(on) {
       if (!celebrate) return;
@@ -177,7 +177,9 @@
       if (gate) gate.hidden = true;
       if (win) win.hidden = false;
       burstConfetti();
-      const vid = win && win.querySelector("video");
+      const media = root.querySelector("[data-final-media]");
+      if (media) media.removeAttribute("hidden");
+      const vid = root.querySelector("video");
       if (vid) {
         const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         if (!reduce) {
